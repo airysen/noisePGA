@@ -1,7 +1,7 @@
 Noise PGA
 =====
 
-# A simple genetic algorithm for feature selection based on DEAP library
+# A simple genetic algorithm for feature selection with DEAP library
 
 *"Zhu, M., & Chipman, H. (2006). Darwinian Evolution in Parallel Universes: A Parallel Genetic Algorithm for Variable Selection. Technometrics, 48(4), 491-502"*
 [http://www.jstor.org/stable/25471241](http://www.jstor.org/stable/25471241)
@@ -25,7 +25,7 @@ Example of usage
 >>> from sklearn.datasets import make_regression
 >>> from sklearn.linear_model import LinearRegression
 >>> X, y, coef = make_regression(n_samples=150, n_features=100, n_informative=15, n_targets=1,
-                             noise=0.0, coef=True)
+                                 noise=0.0, coef=True)
 >>> lr = LinearRegression()
 >>> nga = NoiseGAEnsemble(lr, ngen=15, ens_size=50, cv=5, s=1.2)
 >>> nga.fit(X, y)

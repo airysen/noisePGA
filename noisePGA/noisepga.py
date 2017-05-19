@@ -62,8 +62,10 @@ class NoiseGAEnsemble(BaseEstimator):
         s: float
             parameter of distortion to control the amount of added noise.
             If 0, means no noise added
-        cv: int
-            number of folds in K-fold validation.
+        cv: int, cross-validation generator or an iterable
+            integer, to specify the number of folds in a KFold
+            an object to be used as a cross-validation generator
+            an iterable yielding train, test splits
         random_state:int
             random_state parameter for KFold function.
         verobse: int
@@ -225,10 +227,8 @@ class SGASelection(BaseEstimator):
         X = self.X[:, ic]
         y = self.y
         n = X.shape[0]
-
-        itercv = KFold(n_splits=cv, shuffle=True, random_state=self.rs)
         RSS = cross_val_score(self.model, X, y, scoring='neg_mean_squared_error',
-                              cv=itercv, n_jobs=1)
+                              cv=cv, n_jobs=1)
         RSS = np.fabs(np.array(RSS))
 
         F = 2 * np.array(individual).sum() + n * np.log(RSS.mean())

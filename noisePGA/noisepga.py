@@ -2,7 +2,7 @@
 Noise PGA
 =====
 
-# A simple genetic algorithm for feature selection based on DEAP library
+# A simple genetic algorithm for feature selection with DEAP library
 
 .. note::
     "Zhu, M., & Chipman, H. (2006). Darwinian Evolution in Parallel Universes: A Parallel Genetic Algorithm
@@ -26,7 +26,7 @@ from deap import base
 from deap import creator
 from deap import tools
 from deap import algorithms
-from sklearn.model_selection import KFold, cross_val_score
+from sklearn.model_selection import cross_val_score
 from sklearn.base import BaseEstimator
 from sklearn.base import clone as clone_estimator
 
@@ -80,7 +80,7 @@ class NoiseGAEnsemble(BaseEstimator):
         nga = NoiseGAEnsemble(lr, ngen=15, ens_size=50, cv=5, s=1.2)
         nga.fit(X, y)
         print('TRUE: ', np.where(coef > 0)[0])
-        print('PRED: ', np.where(nga.get_rmean() > 0.5)[0])
+        print('PRED: ', np.where(nga.get_rmean() > 0.4)[0])
         """
 
         self.model = estimator
@@ -223,7 +223,8 @@ class SGASelection(BaseEstimator):
         w = np.array(individual)
         z = np.zeros(w.shape[0])
         ic = w > z
-
+        if not ic.any():
+            ic[np.random.randint(ic.shape[0])] = True
         X = self.X[:, ic]
         y = self.y
         n = X.shape[0]

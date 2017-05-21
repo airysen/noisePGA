@@ -21,6 +21,7 @@ Example of usage
 -----
 
 ```python
+>>> import numpy as np
 >>> from noisePGA import NoiseGAEnsemble
 >>> from sklearn.datasets import make_regression
 >>> from sklearn.linear_model import LinearRegression
@@ -30,5 +31,5 @@ Example of usage
 >>> nga = NoiseGAEnsemble(lr, ngen=15, ens_size=50, cv=5, s=1.2)
 >>> nga.fit(X, y)
 >>> print('TRUE: ', np.where(coef > 0)[0])
->>> print('PRED: ', np.where(nga.get_rmean() > 0.5)[0])
+>>> print('PRED: ', np.where(nga.get_rmean() > 0.4)[0])
 ```
